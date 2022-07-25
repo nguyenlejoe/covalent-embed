@@ -37,7 +37,9 @@ enum SubNavState {
     HIDE, VISIBLE_CHAIN_SELECTED, VISIBLE_DATE_SELECTOR, VISIBLE_DISABLED
 }
 
-const ShareView = (props: ShareViewProps) => {
+const ShareView = ({data}, props:ShareViewProps) => {
+
+
     const router = useRouter()
     const { id, embed } = router.query
     const myDecipher = decipher("covalent-embed");
@@ -62,7 +64,7 @@ const ShareView = (props: ShareViewProps) => {
     //     };
     // }
     const s = C.LIGHT;
-    const [maybeData, setData] = useState(None);
+    const [maybeData, setData] = useState(new Some(data));
     const [currentChainNames, setCurrentChainNames] = useState<string[]>(embedSettings.chains.length > 0 && !embedSettings.filter ? embedSettings.chains : []);
     const [currentDateRange, setCurrentDateRange] = useState(embedSettings.range && !embedSettings.filter ? embedSettings.range : "this_month");
     const [currentDateAgg, setCurrentDateAgg] = useState(embedSettings.agg && !embedSettings.filter ? embedSettings.agg : "daily");
@@ -71,43 +73,6 @@ const ShareView = (props: ShareViewProps) => {
 
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
 
-    const handleCardData = () => {
-        api.singleCardForUser(id).then((resp) => {
-            setData(new Some(resp.data.item));
-            setDisplayName(resp.data.item.chart.display_name);
-        });
-    };
-
-    const handleBoardData = () => {
-        api.singleBoardForUser(id).then((resp) => {
-            setData(new Some(resp.data));
-            setDisplayName(resp.data.display_name);
-        });
-    };
-
-    const handlePageData = () => {
-        api.pageDetailForUserById(id).then((resp) => {
-            setData(new Some(resp.data.item));
-            setDisplayName(resp.data.item.display_name);
-        });
-    };
-
-    useEffect(() => {
-        switch (id?.split("_")[0]) {
-            case "card":
-                handleCardData();
-                break;
-            case "board":
-                handleBoardData();
-                break;
-            case "page":
-                handlePageData();
-                break;
-            default:
-                break;
-        }
-
-    }, [id]);
     const RenderFrame = (() => {
         switch (id?.split("_")[0]) {
             case "card":
@@ -262,8 +227,49 @@ const ShareView = (props: ShareViewProps) => {
 
 export default ShareView;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({query}) {
+    let data
+    let displayName
+
+    const handleCardData = async () => {
+        await api.singleCardForUser(query.id).then((resp) => {
+            data = resp.data.item
+            displayName = resp.data.item.chart.display_name;
+        });
+    };
+
+    const handleBoardData = async() => {
+        await api.singleBoardForUser(query.id).then((resp) => {
+            data = resp.data
+            displayName = resp.data.display_name
+        });
+    };
+
+    const handlePageData = async () => {
+        await api.pageDetailForUserById(query.id).then((resp) => {
+            data = resp.data.item
+            displayName = resp.data.item.display_name
+        });
+    };
+
+        switch (query.id?.split("_")[0]) {
+            case "card":
+                await handleCardData();
+                break;
+            case "board":
+                await handleBoardData();
+                break;
+            case "page":
+                await handlePageData();
+                break;
+            default:
+                break;
+        }
+
+
   return {
-    props: {}, // will be passed to the page component as props
+    props: {
+        data
+    }, // will be passed to the page component as props
   }
 }
