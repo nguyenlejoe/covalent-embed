@@ -11,6 +11,7 @@ import {renderChainSelect, renderDataAggSelect, renderChronoSelect} from "../com
 import { incrementWide, incrementWideBlack } from "../svgs";
 import { Helmet } from "react-helmet";
 import {decipher} from "../helpers/crypt";
+import Head from 'next/head'
 
 interface ShareViewProps {
     darkMode: boolean;
@@ -198,12 +199,12 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
 
     return (
         <div className={s.BG_COLOR_SECONDARY}>
-            <Helmet>
+            <Head>
                 <meta property="og:title" content="Embed Covalent"/>
                 {displayName &&
-                    <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`}/>
+                    <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} key={displayName}/>
                 }
-            </Helmet>
+            </Head>
 
             <Navbar className="border-none">
                 <Navbar.Group align={Alignment.LEFT}>
