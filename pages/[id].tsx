@@ -210,9 +210,9 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
                 {/* {displayName &&
                     <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} key={displayName}/>
                 } */}
-                {image &&
-                    <meta property="og:image" content={image} key={displayName}/>
-                }
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} />
+                <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} />
             </Head>
 
             <Navbar className="border-none">
@@ -278,7 +278,7 @@ export async function getServerSideProps({query}) {
   return {
     props: {
         data,
-        displayName
+        displayName: displayName ? displayName : "Untitled"
     },
   }
 }
