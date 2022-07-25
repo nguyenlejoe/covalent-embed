@@ -39,7 +39,8 @@ enum SubNavState {
     HIDE, VISIBLE_CHAIN_SELECTED, VISIBLE_DATE_SELECTOR, VISIBLE_DISABLED
 }
 
-const ShareView = ({data, displayName, ogImage}, props:ShareViewProps) => {
+const ShareView = ({data, displayName}, props:ShareViewProps) => {
+
     const router = useRouter()
     const { id, embed } = router.query
     const myDecipher = decipher("covalent-embed");
@@ -69,15 +70,9 @@ const ShareView = ({data, displayName, ogImage}, props:ShareViewProps) => {
     const [currentChainNames, setCurrentChainNames] = useState<string[]>(embedSettings.chains.length > 0 && !embedSettings.filter ? embedSettings.chains : []);
     const [currentDateRange, setCurrentDateRange] = useState(embedSettings.range && !embedSettings.filter ? embedSettings.range : "this_month");
     const [currentDateAgg, setCurrentDateAgg] = useState(embedSettings.agg && !embedSettings.filter ? embedSettings.agg : "daily");
-    const [image, takeScreenShot] = useScreenshot();
 
-    const getImage = () => takeScreenShot(ref.current);
 
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
-
-    useEffect(()=>{
-        setTimeout(getImage, 2000);
-    },[])
 
     const RenderFrame = (() => {
         switch (id?.split("_")[0]) {
@@ -213,8 +208,10 @@ const ShareView = ({data, displayName, ogImage}, props:ShareViewProps) => {
                 <meta property="og:type" content="website" />
                 {/* <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} />
                 <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} /> */}
-                <meta property="og:image" content={ogImage} />
-                <meta property="twitter:image" content={ogImage} />
+                <meta property="og:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}`} />
+                <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}`}/>
+                {/* <meta property="og:image" content={ogImage} />
+                <meta property="twitter:image" content={ogImage} /> */}
             </Head>
 
             <Navbar className="border-none">
@@ -277,9 +274,11 @@ export async function getServerSideProps({query}) {
                 break;
         }
 
-    await api.ogImage(query.id).then((resp)=>{
-        ogImage = resp
-    })
+    // await api.ogImage(query.id).then((resp)=>{
+    //     ogImage = resp
+    // })
+
+    // console.log(ogImage)
 
 
   return {

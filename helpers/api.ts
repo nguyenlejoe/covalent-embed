@@ -766,16 +766,13 @@ export const api = {
     },
     ogImage: async (id:string) => {
 
-        const resp = await fetch("https://covalent-og-image.vercel.app/api", {
-            method: "POST",
-            body: JSON.stringify({
-               id: id
-            })
+        const resp = await fetch(`https://covalent-og-image.vercel.app/api?id=${id}`, {
+            method: "GET",
         });
-        console.log(resp)
-        return resp
 
-        // let stream;
+        console.log(resp.body)
+
+        let stream;
 
         // if (resp.body) {
         //     const reader = resp.body.getReader();
