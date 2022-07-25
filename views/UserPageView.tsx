@@ -1,6 +1,6 @@
 import React, { useState, useEffect, BlockquoteHTMLAttributes } from "react";
 import { Option, Some, None } from "../helpers/option";
-
+import { useRouter } from 'next/router'
 import { Helmet } from "react-helmet";
 
 import * as C from "../helpers/colors";
@@ -48,7 +48,8 @@ interface UserPageViewParams {
 }
 
 export default function UserPageView(props: UserPageViewProps) {
-    const { pageId, groupSlug, pageSlug } = useParams<UserPageViewParams>();
+    const router = useRouter()
+    const { pageId, groupSlug, pageSlug } = router.query
     const s = props.darkMode ? C.DARK : C.LIGHT;
     const [maybePage, setPage] = useState<Option<Page>>(None);
     const [maybeBoards, setBoards] = useState(None);
@@ -276,7 +277,7 @@ export default function UserPageView(props: UserPageViewProps) {
                 currentDateRange={props.currentDateRange}
                 currentDateAgg={props.currentDateAgg}
             />
-            <div className={"h-52 flex place-items-center justify-center " + s.BG_COLOR}>
+            <div className={"h-80 flex place-items-center justify-center " + s.BG_COLOR}>
                 {
                     maybePage.match({
                         None: () => <div className="mx-auto text-6xl font-extralight select-none">{FILLER}</div>,

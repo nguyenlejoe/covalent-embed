@@ -764,67 +764,6 @@ export const api = {
             }
         });
     },
-    ogImage: async (id:string) => {
 
-        const resp = await fetch(`https://covalent-og-image.vercel.app/api?id=${id}`, {
-            method: "GET",
-        });
-
-        console.log(resp.body)
-
-        let stream;
-
-        // if (resp.body) {
-        //     const reader = resp.body.getReader();
-        //     stream = new ReadableStream({
-        //         start(controller) {
-        //             return pump();
-        //             function pump() {
-        //                 return reader.read().then(({ done, value }) => {
-        //                     if (done) {
-        //                         controller.close();
-        //                         return;
-        //                     }
-        //                     controller.enqueue(value);
-        //                     return pump();
-        //                 });
-        //             }
-        //         }
-        //     });
-        // }
-
-        // const blob = new Response(stream).blob();
-
-        // const reader = new FileReader();
-
-        // reader.readAsDataURL(await blob);
-
-        // function blobToBase64(blob) {
-        //     return new Promise((resolve, _) => {
-        //         const reader = new FileReader();
-        //         reader.onloadend = () => resolve(reader.result);
-        //         reader.readAsDataURL(blob);
-        //     });
-        // }
-
-        // const blob64: any = await blobToBase64(await blob);
-
-        // const result = blob64.toString().replace("application/octet-stream", "image/png");
-
-        // return result;
-
-
-        // ((stream) => new Response(stream))
-        //     .then((response) => response.blob())
-        //     .then((blob) => {
-        //         const reader = new FileReader();
-        //         reader.readAsDataURL(blob);
-        //         reader.onloadend = function() {
-        //             const base64data = reader.result;
-        //             return base64data?.toString().replace("application/octet-stream", "image/png");
-        //         };
-
-        //     });
-    }
 
 };

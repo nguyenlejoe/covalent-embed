@@ -9,10 +9,8 @@ import UserPageView from "../views/UserPageView";
 import { Alignment, Navbar, NavbarDivider, Spinner } from "@blueprintjs/core";
 import {renderChainSelect, renderDataAggSelect, renderChronoSelect} from "../components/filters";
 import { incrementWide, incrementWideBlack } from "../svgs";
-import { Helmet } from "react-helmet";
 import {decipher} from "../helpers/crypt";
 import Head from 'next/head'
-import { useScreenshot } from "use-react-screenshot";
 
 interface ShareViewProps {
     darkMode: boolean;
@@ -166,10 +164,7 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
                             <div className={"h-[calc(100vh-50px)]"}>
                                 <UserPageView
                                     chains={[]}
-                                    token={props.token.match({
-                                        None: () => "",
-                                        Some: (token) => token
-                                    })}
+                                    token={""}
                                     darkMode={false}
                                     currentChainNames={currentChainNames}
                                     editMode={false}
@@ -202,16 +197,9 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
         <div className={s.BG_COLOR_SECONDARY} ref={ref}>
             <Head>
                 <meta property="og:title" content="Embed Covalent"/>
-                {/* {displayName &&
-                    <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} key={displayName}/>
-                } */}
                 <meta property="og:type" content="website" />
-                {/* <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} />
-                <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} /> */}
                 <meta property="og:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}`} />
                 <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}`}/>
-                {/* <meta property="og:image" content={ogImage} />
-                <meta property="twitter:image" content={ogImage} /> */}
             </Head>
 
             <Navbar className="border-none">
@@ -255,6 +243,7 @@ export async function getServerSideProps({query}) {
 
     const handlePageData = async () => {
         await api.pageDetailForUserById(query.id).then((resp) => {
+            console.log(resp)
             data = resp.data.item
             displayName = resp.data.item.display_name
         });
@@ -273,12 +262,6 @@ export async function getServerSideProps({query}) {
             default:
                 break;
         }
-
-    // await api.ogImage(query.id).then((resp)=>{
-    //     ogImage = resp
-    // })
-
-    // console.log(ogImage)
 
 
   return {
