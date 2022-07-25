@@ -76,10 +76,8 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
 
     useEffect(()=>{
-        if(!image){
-            setTimeout(getImage, 2000);
-        }
-    },[image])
+        setTimeout(getImage, 2000);
+    },[])
 
     const RenderFrame = (() => {
         switch (id?.split("_")[0]) {
