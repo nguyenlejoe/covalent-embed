@@ -772,47 +772,49 @@ export const api = {
                id: id
             })
         });
+        console.log(resp)
+        return resp
 
-        let stream;
+        // let stream;
 
-        if (resp.body) {
-            const reader = resp.body.getReader();
-            stream = new ReadableStream({
-                start(controller) {
-                    return pump();
-                    function pump() {
-                        return reader.read().then(({ done, value }) => {
-                            if (done) {
-                                controller.close();
-                                return;
-                            }
-                            controller.enqueue(value);
-                            return pump();
-                        });
-                    }
-                }
-            });
-        }
+        // if (resp.body) {
+        //     const reader = resp.body.getReader();
+        //     stream = new ReadableStream({
+        //         start(controller) {
+        //             return pump();
+        //             function pump() {
+        //                 return reader.read().then(({ done, value }) => {
+        //                     if (done) {
+        //                         controller.close();
+        //                         return;
+        //                     }
+        //                     controller.enqueue(value);
+        //                     return pump();
+        //                 });
+        //             }
+        //         }
+        //     });
+        // }
 
-        const blob = new Response(stream).blob();
+        // const blob = new Response(stream).blob();
 
-        const reader = new FileReader();
+        // const reader = new FileReader();
 
-        reader.readAsDataURL(await blob);
+        // reader.readAsDataURL(await blob);
 
-        function blobToBase64(blob) {
-            return new Promise((resolve, _) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(blob);
-            });
-        }
+        // function blobToBase64(blob) {
+        //     return new Promise((resolve, _) => {
+        //         const reader = new FileReader();
+        //         reader.onloadend = () => resolve(reader.result);
+        //         reader.readAsDataURL(blob);
+        //     });
+        // }
 
-        const blob64: any = await blobToBase64(await blob);
+        // const blob64: any = await blobToBase64(await blob);
 
-        const result = blob64.toString().replace("application/octet-stream", "image/png");
+        // const result = blob64.toString().replace("application/octet-stream", "image/png");
 
-        return result;
+        // return result;
 
 
         // ((stream) => new Response(stream))

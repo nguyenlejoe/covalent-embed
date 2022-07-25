@@ -282,12 +282,10 @@ export async function getServerSideProps({query}) {
     })
 
 
-
   return {
     props: {
         data,
         displayName: displayName ? displayName : "Untitled",
-        ogImage
     },
   }
 }
