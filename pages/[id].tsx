@@ -110,7 +110,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
                                         return;
                                     }}
                                     refreshPageCharts={false}
-                                    groupId={props.groupId}
+                                    groupId={None}
                                 />
                             </div>
                         );
@@ -126,7 +126,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
                         return (
                             <div className={" pr-2 pl-3 relative "}>
                                 <BoardDetailView
-                                    groupId={props.groupId}
+                                    groupId={None}
                                     chains={[]}
                                     expanded={false}
                                     setRefreshPageCharts={() => {
@@ -177,7 +177,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
                                     deleteConfirm={false}
                                     currentDateAgg={currentDateAgg}
                                     currentDateRange={currentDateRange}
-                                    groupId={props.groupId}
+                                    groupId={None}
                                     showMessage={props.showMessage}
                                     shareId={page.id}
                                     setUseChainFilter={props.setUseChainFilter}
