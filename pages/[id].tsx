@@ -270,6 +270,6 @@ export async function getServerSideProps({query}) {
   return {
     props: {
         data
-    }, // will be passed to the page component as props
+    },
   }
 }

@@ -48,40 +48,45 @@ const CardWrapper = (props: CardProps) => {
 
     const handleCardData = () => {
         setDoneLoading(false);
-        const card = limit(() => buildUserCard({
-            cardsData: props.data, currentDateAgg: props.currentDateAgg, currentDateRange: props.currentDateRange, currentChainNames: props.currentChainNames,
-            setUseChainFilter: props.setUseChainFilter,
-            setUseDateRangeFilter: props.setUseDateRangeFilter,
-            setUseDateAggFilter: props.setUseDateAggFilter,
-            useChainFilter: props.useChainFilter,
-            useDateRangeFilter: props.useDateRangeFilter,
-            useDateAggFilter: props.useDateAggFilter,
-            setDisplayChainFilterSubtitle: setDisplayChainFilterSubtitle,
-            setDisplayDateAggSubtitle: setDisplayDateAggSubtitle,
-            setDisplayDateRangeSubtitle: setDisplayDateRangeSubtitle,
-            expanded: props.expanded
-        }));
-
-
-
-        card.then((result) => {
-            setDoneLoading(true);
-            if (result) {
-                const collection = props.collection;
-                if (collection) {
-                    for (let i = 0; i < collection.length; i++) {
-                        if (collection[i].id === result.id) {
-                            collection[i] = result;
-                            props.setCardCollection?.(collection);
+        try {
+            const card = limit(() => buildUserCard({
+                cardsData: props.data, currentDateAgg: props.currentDateAgg, currentDateRange: props.currentDateRange, currentChainNames: props.currentChainNames,
+                setUseChainFilter: props.setUseChainFilter,
+                setUseDateRangeFilter: props.setUseDateRangeFilter,
+                setUseDateAggFilter: props.setUseDateAggFilter,
+                useChainFilter: props.useChainFilter,
+                useDateRangeFilter: props.useDateRangeFilter,
+                useDateAggFilter: props.useDateAggFilter,
+                setDisplayChainFilterSubtitle: setDisplayChainFilterSubtitle,
+                setDisplayDateAggSubtitle: setDisplayDateAggSubtitle,
+                setDisplayDateRangeSubtitle: setDisplayDateRangeSubtitle,
+                expanded: props.expanded
+            }));
+    
+    
+    
+            card.then((result) => {
+                setDoneLoading(true);
+                if (result) {
+                    const collection = props.collection;
+                    if (collection) {
+                        for (let i = 0; i < collection.length; i++) {
+                            if (collection[i].id === result.id) {
+                                collection[i] = result;
+                                props.setCardCollection?.(collection);
+                            }
                         }
                     }
+                    setResponse(new Some(result));
+                } else {
+                    setResponse(new Some(false));
                 }
-                setResponse(new Some(result));
-            } else {
-                setResponse(new Some(false));
-            }
+    
+            });
+        }catch{
+            setResponse(new Some(false));
+        }
 
-        });
     };
 
     useEffect(() => {
@@ -253,4 +258,3 @@ const CardWrapper = (props: CardProps) => {
 };
 
 export default CardWrapper;
-
