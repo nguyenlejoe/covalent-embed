@@ -39,7 +39,7 @@ enum SubNavState {
     HIDE, VISIBLE_CHAIN_SELECTED, VISIBLE_DATE_SELECTOR, VISIBLE_DISABLED
 }
 
-const ShareView = ({data, displayName}, props:ShareViewProps) => {
+const ShareView = ({data, displayName, ogImage}, props:ShareViewProps) => {
     const router = useRouter()
     const { id, embed } = router.query
     const myDecipher = decipher("covalent-embed");
@@ -213,8 +213,8 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
                 <meta property="og:type" content="website" />
                 {/* <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} />
                 <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} /> */}
-                <meta property="og:image" content={image} />
-                <meta property="twitter:image" content={image} />
+                <meta property="og:image" content={ogImage} />
+                <meta property="twitter:image" content={ogImage} />
             </Head>
 
             <Navbar className="border-none">
@@ -240,6 +240,7 @@ export default ShareView;
 export async function getServerSideProps({query}) {
     let data
     let displayName
+    let ogImage
 
     const handleCardData = async () => {
         await api.singleCardForUser(query.id).then((resp) => {
@@ -276,11 +277,17 @@ export async function getServerSideProps({query}) {
                 break;
         }
 
+    await api.ogImage(query.id).then((resp)=>{
+        ogImage = resp
+    })
+
+
 
   return {
     props: {
         data,
-        displayName: displayName ? displayName : "Untitled"
+        displayName: displayName ? displayName : "Untitled",
+        ogImage
     },
   }
 }
