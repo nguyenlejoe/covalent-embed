@@ -224,7 +224,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
 
             </Navbar>
 
-            {/* {RenderFrame} */}
+            {RenderFrame}
         </div>
     );
 };
