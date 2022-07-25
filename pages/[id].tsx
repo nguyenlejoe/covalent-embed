@@ -107,7 +107,7 @@ const ShareView = (props: ShareViewProps) => {
                 break;
         }
 
-    }, []);
+    }, [id]);
     const RenderFrame = (() => {
         switch (id?.split("_")[0]) {
             case "card":
