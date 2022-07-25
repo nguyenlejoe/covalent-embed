@@ -64,11 +64,15 @@ const ShareView = ({data}, props:ShareViewProps) => {
     //     };
     // }
     const s = C.LIGHT;
-    const [maybeData, setData] = useState(new Some(data));
+    const [maybeData, setData] = useState(data ? new Some(data) : None);
     const [currentChainNames, setCurrentChainNames] = useState<string[]>(embedSettings.chains.length > 0 && !embedSettings.filter ? embedSettings.chains : []);
     const [currentDateRange, setCurrentDateRange] = useState(embedSettings.range && !embedSettings.filter ? embedSettings.range : "this_month");
     const [currentDateAgg, setCurrentDateAgg] = useState(embedSettings.agg && !embedSettings.filter ? embedSettings.agg : "daily");
     const [displayName, setDisplayName] = useState("");
+
+    useEffect(()=>{
+         console.log(data)
+    },[data])
 
 
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
@@ -220,7 +224,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
 
             </Navbar>
 
-            {RenderFrame}
+            {/* {RenderFrame} */}
         </div>
     );
 };
