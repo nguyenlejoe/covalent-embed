@@ -125,9 +125,10 @@ const ShareView = ({data}, props:ShareViewProps) => {
                         <Spinner/>
                     </div>,
                     Some: (board) => {
+                        console.log(board)
                         return (
                             <div className={" pr-2 pl-3 relative "}>
-                                <BoardDetailView
+                                {/* <BoardDetailView
                                     groupId={props.groupId}
                                     chains={[]}
                                     expanded={false}
@@ -152,7 +153,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
                                         return;
                                     }}
                                     pageDisplayName=""
-                                />
+                                /> */}
                             </div>
                         );
 
