@@ -43,26 +43,31 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
     const { id, embed } = router.query
     const myDecipher = decipher("covalent-embed");
     const ref = useRef(null);
-    // const decrypt = myDecipher(embed);
-    const embedSettings = {
+
+
+
+    let embedSettings;
+    if(embed){
+            const decrypt = myDecipher(embed);
+        try {
+            embedSettings = JSON.parse(decrypt);
+        } catch (error) {
+            embedSettings = {
+                filter: true,
+                chains: [],
+                agg: props.currentDateAgg,
+                range: props.currentDateRange
+            };
+        }
+    }else{
+    embedSettings = {
       filter: false,
       chains: [],
       agg: props.currentDateAgg,
       range: props.currentDateRange
-  };
+    };
+    }
 
-    // let embedSettings;
-
-    // try {
-    //     embedSettings = JSON.parse(decrypt);
-    // } catch (error) {
-    //     embedSettings = {
-    //         filter: true,
-    //         chains: props.currentChainNames,
-    //         agg: props.currentDateAgg,
-    //         range: props.currentDateRange
-    //     };
-    // }
     const s = C.LIGHT;
     const [maybeData, setData] = useState(data ? new Some(data) : None);
     const [currentChainNames, setCurrentChainNames] = useState<string[]>(embedSettings.chains.length > 0 && !embedSettings.filter ? embedSettings.chains : []);
