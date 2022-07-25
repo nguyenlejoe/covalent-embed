@@ -101,7 +101,8 @@ const CardWrapper = (props: CardProps) => {
             props.setRefreshPageCharts(false);
             setResponse(None);
         }
-        handleCardData();
+        // handleCardData();
+        setResponse(new Some(false));
         setFirstLoad(false);
 
     }, [props.data]);

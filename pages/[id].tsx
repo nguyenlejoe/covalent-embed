@@ -70,9 +70,6 @@ const ShareView = ({data}, props:ShareViewProps) => {
     const [currentDateAgg, setCurrentDateAgg] = useState(embedSettings.agg && !embedSettings.filter ? embedSettings.agg : "daily");
     const [displayName, setDisplayName] = useState("");
 
-    useEffect(()=>{
-         console.log(data)
-    },[data])
 
 
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
@@ -128,7 +125,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
                         console.log(board)
                         return (
                             <div className={" pr-2 pl-3 relative "}>
-                                {/* <BoardDetailView
+                                <BoardDetailView
                                     groupId={props.groupId}
                                     chains={[]}
                                     expanded={false}
@@ -153,7 +150,7 @@ const ShareView = ({data}, props:ShareViewProps) => {
                                         return;
                                     }}
                                     pageDisplayName=""
-                                /> */}
+                                />
                             </div>
                         );
 
