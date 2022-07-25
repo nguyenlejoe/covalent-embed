@@ -37,7 +37,7 @@ enum SubNavState {
     HIDE, VISIBLE_CHAIN_SELECTED, VISIBLE_DATE_SELECTOR, VISIBLE_DISABLED
 }
 
-const ShareView = ({data}, props:ShareViewProps) => {
+const ShareView = ({data, displayName}, props:ShareViewProps) => {
 
 
     const router = useRouter()
@@ -68,9 +68,6 @@ const ShareView = ({data}, props:ShareViewProps) => {
     const [currentChainNames, setCurrentChainNames] = useState<string[]>(embedSettings.chains.length > 0 && !embedSettings.filter ? embedSettings.chains : []);
     const [currentDateRange, setCurrentDateRange] = useState(embedSettings.range && !embedSettings.filter ? embedSettings.range : "this_month");
     const [currentDateAgg, setCurrentDateAgg] = useState(embedSettings.agg && !embedSettings.filter ? embedSettings.agg : "daily");
-    const [displayName, setDisplayName] = useState("");
-
-
 
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
 
@@ -271,7 +268,8 @@ export async function getServerSideProps({query}) {
 
   return {
     props: {
-        data
+        data,
+        displayName
     },
   }
 }
