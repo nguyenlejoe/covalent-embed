@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, useMemo } from "react";
+import React, { useState, useEffect, FC, useMemo, useRef } from "react";
 import { useRouter } from 'next/router'
 import * as C from "../helpers/colors";
 import CardWrapper from "../components/card-comps/CardWrapper";
@@ -12,6 +12,7 @@ import { incrementWide, incrementWideBlack } from "../svgs";
 import { Helmet } from "react-helmet";
 import {decipher} from "../helpers/crypt";
 import Head from 'next/head'
+import { useScreenshot } from "use-react-screenshot";
 
 interface ShareViewProps {
     darkMode: boolean;
@@ -39,11 +40,10 @@ enum SubNavState {
 }
 
 const ShareView = ({data, displayName}, props:ShareViewProps) => {
-
-
     const router = useRouter()
     const { id, embed } = router.query
     const myDecipher = decipher("covalent-embed");
+    const ref = useRef(null);
     // const decrypt = myDecipher(embed);
     const embedSettings = {
       filter: false,
@@ -69,8 +69,17 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
     const [currentChainNames, setCurrentChainNames] = useState<string[]>(embedSettings.chains.length > 0 && !embedSettings.filter ? embedSettings.chains : []);
     const [currentDateRange, setCurrentDateRange] = useState(embedSettings.range && !embedSettings.filter ? embedSettings.range : "this_month");
     const [currentDateAgg, setCurrentDateAgg] = useState(embedSettings.agg && !embedSettings.filter ? embedSettings.agg : "daily");
+    const [image, takeScreenShot] = useScreenshot();
+
+    const getImage = () => takeScreenShot(ref.current);
 
     const selectorNav = SubNavState.VISIBLE_DATE_SELECTOR;
+
+    useEffect(()=>{
+        if(!image){
+            setTimeout(getImage, 2000);
+        }
+    },[image])
 
     const RenderFrame = (() => {
         switch (id?.split("_")[0]) {
@@ -120,7 +129,6 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
                         <Spinner/>
                     </div>,
                     Some: (board) => {
-                        console.log(board)
                         return (
                             <div className={" pr-2 pl-3 relative "}>
                                 <BoardDetailView
@@ -198,11 +206,14 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
     const subNav = <div>{renderChainSelect(currentChainNames, setCurrentChainNames)}    {renderDataAggSelect(currentDateAgg, selectorNav, setCurrentDateAgg)} {renderChronoSelect(currentDateRange,selectorNav, setCurrentDateRange)}</div>;
 
     return (
-        <div className={s.BG_COLOR_SECONDARY}>
+        <div className={s.BG_COLOR_SECONDARY} ref={ref}>
             <Head>
                 <meta property="og:title" content="Embed Covalent"/>
-                {displayName &&
+                {/* {displayName &&
                     <meta property="og:image" content={`https://covalent-og-image.vercel.app/${displayName}.png?md=1&subtitle=embed`} key={displayName}/>
+                } */}
+                {image &&
+                    <meta property="og:image" content={image} key={displayName}/>
                 }
             </Head>
 
@@ -219,7 +230,6 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
                 }
 
             </Navbar>
-
             {RenderFrame}
         </div>
     );
