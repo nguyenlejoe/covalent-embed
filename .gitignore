@@ -1,0 +1,13 @@
+.DS_Store
+hugo
+yarn-error.log
+.hugo_build.lock
+resources/_gen
+.env
+.envrc
+node_modules/
+public/
+dist/
+.parcel-cache/
+.envrc
+.vscode/
