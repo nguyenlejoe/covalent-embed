@@ -316,7 +316,7 @@ export const BoardDetailView = (props: BoardDetailViewProps) => {
 
                                 return <div key={i} className={`${start === i && row} border-b border-r ${s.BORDER_SECONDARY}  ${s.BORDER_SECONDARY} `}>
                                     {/* <CardDropZone reorderCard={props.reorderCard} id={props.board.title + "-" + i + "-prepend"} key={props.board.title + "-" + i + "-prepend"} /> */}
-                                    {/* <CardWrapper
+                                    <CardWrapper
                                         groupId={props.groupId}
                                         chains={props.chains}
                                         expanded={props.expanded}
@@ -344,7 +344,7 @@ export const BoardDetailView = (props: BoardDetailViewProps) => {
                                         useChainFilter={props.useChainFilter}
                                         useDateRangeFilter={props.useDateRangeFilter}
                                         useDateAggFilter={props.useDateAggFilter}
-                                    /> */}
+                                    />
                                     {/* <CardDropZone reorderCard={props.reorderCard} id={props.board.title + "-" + i + "-append"} key={props.board.title + "-" + i + "-append"} /> */}
                                 </div>;
                             })

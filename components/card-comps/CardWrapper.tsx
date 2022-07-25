@@ -102,7 +102,6 @@ const CardWrapper = (props: CardProps) => {
             setResponse(None);
         }
         // handleCardData();
-        setResponse(new Some(false));
         setFirstLoad(false);
 
     }, [props.data]);
@@ -146,7 +145,7 @@ const CardWrapper = (props: CardProps) => {
         titlePrefix = generateTitlePrefix(props.pageDisplayName, props.boardDisplayName, props.currentDateAgg);
 
     const menu = <Menu>
-        {isProduction ? props.groupId.match({
+        {isProduction && props.groupId ? props.groupId.match({
             None: () => null,
             Some: (s) => {
                 if (s === COVALENT_GROUP_ID) {
