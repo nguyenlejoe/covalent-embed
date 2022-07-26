@@ -203,8 +203,8 @@ const ShareView = ({data, displayName}, props:ShareViewProps) => {
             <Head>
                 <meta property="og:title" content="Embed Covalent"/>
                 <meta property="og:type" content="website" />
-                <meta property="og:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}?params=${embed}`} />
-                <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}?params=${embed}`}/>
+                <meta property="og:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}?embed=${embed}`} />
+                <meta property="twitter:image" content={`https://covalent-og-image.vercel.app/api?id=${data.id}?embed=${embed}`}/>
             </Head>
 
             <Navbar className="border-none">
