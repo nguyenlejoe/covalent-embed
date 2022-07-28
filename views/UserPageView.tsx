@@ -277,7 +277,7 @@ export default function UserPageView(props: UserPageViewProps) {
                 currentDateRange={props.currentDateRange}
                 currentDateAgg={props.currentDateAgg}
             />
-            <div className={"h-80 flex place-items-center justify-center " + s.BG_COLOR}>
+            <div className={"h-40 flex place-items-center justify-center " + s.BG_COLOR}>
                 {
                     maybePage.match({
                         None: () => <div className="mx-auto text-6xl font-extralight select-none">{FILLER}</div>,
