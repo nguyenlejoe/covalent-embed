@@ -353,7 +353,7 @@ export const BoardDetailView = (props: BoardDetailViewProps) => {
                     </div>
                 );
             } else {
-                return <div className="flex items-center justify-center h-full">
+                return <div className="flex items-center justify-center">
                     <NonIdealState
                         className="mb-8"
                         icon={"grid-view"}
@@ -530,7 +530,7 @@ export const BoardDetailView = (props: BoardDetailViewProps) => {
             </div>
         </div>
         {}
-        <div className={`overflow-y-auto overflow-x-hidden min-w-[27rem]  pr-2 ${!props.shareId ? "h-[calc(100vh-22rem)]" : "h-[calc(100vh-139px)] "}`}>
+        <div className={`overflow-y-auto overflow-x-hidden min-w-[27rem]  pr-2  mb-6 -h-[calc(100vh)] ${!props.shareId ? "h-[calc(100vh-22rem)]" : "h-[calc(100vh-139px)] "}`}>
             {el}
         </div>
     </div>;

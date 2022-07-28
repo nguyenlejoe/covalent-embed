@@ -79,7 +79,7 @@ export function Layout(props: LayoutProps) {
 
 
     return (
-        <div className={"overflow-y-auto " + "  h-[calc(100vh-51px-208px)]"}>
+        <div className={"--overflow-y-auto " + "  h-[calc(100vh-51px-208px)]"}>
             <FocusCard
                 setRefreshPageCharts={props.setRefreshPageCharts}
                 refreshPageCharts={props.refreshPageCharts}
@@ -106,7 +106,7 @@ export function Layout(props: LayoutProps) {
             />
 
 
-            <div className={"flex"}>
+                <div className={"flex  min-h-full"}>
 
                 {
                     props.maybeBoards.match({
@@ -125,7 +125,7 @@ export function Layout(props: LayoutProps) {
                             return boards.map((board, i) => {
                                 const bg = `${props.darkMode ? "-bg-black" : "-bg-white"} -bg-opacity-25 mr-1 border-b-0 ` + s.BORDER;
 
-                                return <div className={`${bg} border border-1 relative ${i === props.expandedBoard ? "  pr-2 pl-3 w-[calc(100vw)]" : " cursor-pointer "} ${s.BG_COLOR_SECONDARY} ` + s.BORDER} key={i} onClick={() => {
+                                return <div className={`${bg} ${i === props.expandedBoard ? "border-b" : "border-b "} border border-1 relative mb-1 ${i === props.expandedBoard ? "  pr-2 pl-3 w-[calc(100vw)]" : "border-b cursor-pointer "} ${s.BG_COLOR_SECONDARY} ` + s.BORDER} key={i} onClick={() => {
                                     props.setExpandedBoard(i);
                                 }}>
 
