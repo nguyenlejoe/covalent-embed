@@ -454,7 +454,7 @@ export const api = {
     },
 
     getCardData(card_id: string | undefined, currentDateAgg: string, currentDateRange: string, currentChainNames: string[]): Promise<Response<CovalentItemResponse<CardWithTableData>>> {
-        const url = `${API_BASE_URL}/_/card/${card_id}/data/?`;
+        const url = `${API_BASE_URL}/_/embed_card/${card_id}/data/?`;
         const params = new URLSearchParams();
         params.append("date_aggregation", currentDateAgg);
         params.append("date_range", currentDateRange);
